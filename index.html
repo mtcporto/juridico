@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Notícias</title>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="header">
+    <h1>Notícias</h1>
+  </div>
+  <div class="container py-5">
+    <div class="row" id="newsCards"></div>
+    <button id="loadMore" class="btn btn-primary" style="display: none; margin: 0 auto;">Mais Notícias</button>
+  </div>
+  <script src="stj.js"></script>
+  <script src="camara.js"></script>
+  <!-- <script src="stjInformativo.js"></script> -->
+
+  <script>
+    let newsLoaded = 0;
+
+    function loadNews() {
+        const newsLoadPromises = [
+        loadSTJNews(), // adicione esta linha
+        loadCamaraNews(), // adicione esta linha
+        // loadSTJInformativoNews(), // adicione esta linha
+        ];
+
+      Promise.all(newsLoadPromises)
+        .then(() => {
+          newsLoaded += 4; // Increment newsLoaded after all news are loaded
+          console.log("All news loaded!");
+        })
+        .catch((error) => {
+          console.error("Error loading news:", error);
+        });
+    }
+
+    document.querySelector("#loadMore").addEventListener('click', loadNews);
+    loadNews();
+  </script>
+</body>
+</html>
